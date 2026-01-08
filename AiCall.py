@@ -1,4 +1,4 @@
-#Make sure to 'pip install google-gemini' into your venv for this to work
+#Make sure to 'pip install google-genai' into your venv for this to work
 from google import genai
 import time
 #I can't put the API Key on Github
@@ -31,3 +31,4 @@ def GeminiCall(words = list) -> list:
         #model can sometimes add spaces after each comma
         listWords.append(word.strip())
     return listWords
+
