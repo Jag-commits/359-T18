@@ -31,7 +31,7 @@ while notMax:
     #Extract Values from GeminiCall method
     AItime = AIResponse["timeelapsed"] #Time to sort
     AISortedList = AIResponse["returnList"] #Sorted List
-    Tts.append(round(AItime,5))
+    Tts.append((shuffledLength,round(AItime,5)))
     #Records the time elapsed for the model to return the sorted list
     print(f"Current List Length: {shuffledLength}")
     print(f"Time taken to sort: {AItime}")
@@ -63,7 +63,7 @@ while notMax:
     if shuffledLength>maxlength:notMax=False
 if len(Lwe)!=0:print(f"Lengths with Errors: {Lwe}\nFirst Error At Length: {Lwe[0]}")
 print(f"Lengths with no Issues: {Lwne}")
-print(f"Time Growth for Sorts: {Tts}")
+print(f"Time Growth for Sorts (Length,Time): {Tts}")
 
 
 
