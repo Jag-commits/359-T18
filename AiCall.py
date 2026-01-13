@@ -5,11 +5,11 @@ import time
 GEMINI_API_KEY=""
 
 #Python doesn't do explicit return types so I need to use type hinting
-def GeminiCall(words = list) -> list:
+def GeminiCall(words = list) -> dict:
     #Using API Docs from Google, to interact with Gemini's free tier API: https://ai.google.dev/gemini-api/docs/api-key
     client = genai.Client(api_key=GEMINI_API_KEY)
     words = str(words)
-    prompt = "This prompt does not require extensive thinking. Return only the sorted list, don't say hello, don't say here you go, do not say anything apart from the sorted list. The sorting method should not consider whether the word is capitalized or not. The list should be seperated by commas, there should not be any [] or any type of brackets/parenthesis/apostrophies/quotation marks. Here is the List:" + words
+    prompt = "This prompt does not require extensive thinking. Return only the sorted list, don't say hello, don't say here you go, do not say anything apart from the sorted list. The sorting method should not consider whether the word is capitalized or not, if it's uppercase make it lowercase. The list should be seperated by commas, there should not be any [] or any type of brackets/parenthesis/apostrophies/quotation marks. Here is the List:" + words
     timestart= time.perf_counter()
     response = client.models.generate_content(
         model="gemini-3-flash-preview",
@@ -19,16 +19,18 @@ def GeminiCall(words = list) -> list:
     result = response.text
     timestop = time.perf_counter()
 
-    print(result)
-    #Records the time elapsed for the model to return the sorted list
-    print(timestop-timestart)
+  
 
     #Create a list from the string of sorted words
     listWords=[]
-    #edge cases where the model adds spaces at either end :/
+    #edge cases where the model adds spaces at either end :/ 
     result = result.strip()
     for word in result.split(","):
+        word = word.lower()
         #model can sometimes add spaces after each comma
         listWords.append(word.strip())
-    return listWords
+    return {
+        "returnList" : listWords,
+        "timeelapsed": (timestop-timestart)
+            }
 
