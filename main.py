@@ -7,18 +7,24 @@ import time
 word_list = retrieveWords()
 
 #The shuffled length starts from 5, and expands until it hits the max length
-shuffledLength = 128 
+shuffledLength = 5 
 
 #Account will run out of tokens if I put this too high
 maxlength = 10240
 
-#Repeat loop until we start seeing errors
-noErrors = True
+#Repeat loop until reached max
+notMax = True
 
 #Time to sort list -> Nice to know how time taken to sort grows with list length
 Tts=[]
 
-while noErrors:
+#Lengths with Errors
+Lwe=[]
+
+#Lengths With No Errors
+Lwne=[]
+
+while notMax:
     shuffledlist = randomWordsList(shuffledLength,word_list)
     #Stored in Dictionary
     AIResponse = GeminiCall(shuffledlist)
@@ -34,9 +40,9 @@ while noErrors:
 
     #Stored in Dictionary
     compareResults = compareSorted(shuffledlist,AISortedList)
-    #End loop when first error found
+    #Loop to describe Error until longest possible (Limited by API Free-Tier) input
     if compareResults["firstErrorLocation"] != None:
-        noErrors=False
+        Lwe.append(shuffledLength)
 
         #Store all issues with AI Sorted List
         correctlySorted = compareResults["correctlySorted"]
@@ -49,13 +55,16 @@ while noErrors:
         if correctlySorted !=0 : print(f"Number of Correctly Sorted Words: {correctlySorted}")
         if missingWords !=0:print(f"Number of Missing Words: {missingWords}")
         if extraWords !=0:print(f"Number of Extra Words: {extraWords}")
-
-        break
-
-    print("All Good")
+    else:
+        print("All Good")
+        Lwne.append(shuffledLength)
     shuffledLength= shuffledLength*2
     time.sleep(15) #Trying to Keep under Gemeni's 5 Requests per Minute
-    if shuffledLength==maxlength:noErrors=False
+    if shuffledLength>maxlength:notMax=False
+    if len(Lwe)!=0:print(f"Lengths with Errors: {Lwe}\nFirst Error At Length: {Lwe[0]}")
+    print(f"Lengths with no Issues: {Lwne}")
+    print(f"Time Growth for Sorts: {Tts}")
+
 
 
    
