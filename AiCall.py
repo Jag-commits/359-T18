@@ -2,7 +2,9 @@
 from google import genai
 import time
 #I can't put the API Key on Github
-GEMINI_API_KEY=""
+key1=""
+key2=""
+GEMINI_API_KEY=key1
 
 #Python doesn't do explicit return types so I need to use type hinting
 def GeminiCall(words = list) -> dict:
@@ -29,6 +31,12 @@ def GeminiCall(words = list) -> dict:
         word = word.lower()
         #model can sometimes add spaces after each comma
         listWords.append(word.strip())
+
+    #Cycle through API keys to get a total of 40 requests per day, and 10 per minute
+    global GEMINI_API_KEY
+    if GEMINI_API_KEY==key1:GEMINI_API_KEY=key2
+    else:GEMINI_API_KEY=key1
+
     return {
         "returnList" : listWords,
         "timeelapsed": (timestop-timestart)
