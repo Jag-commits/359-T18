@@ -61,9 +61,9 @@ while notMax:
     shuffledLength= shuffledLength*2
     time.sleep(15) #Trying to Keep under Gemeni's 5 Requests per Minute
     if shuffledLength>maxlength:notMax=False
-    if len(Lwe)!=0:print(f"Lengths with Errors: {Lwe}\nFirst Error At Length: {Lwe[0]}")
-    print(f"Lengths with no Issues: {Lwne}")
-    print(f"Time Growth for Sorts: {Tts}")
+if len(Lwe)!=0:print(f"Lengths with Errors: {Lwe}\nFirst Error At Length: {Lwe[0]}")
+print(f"Lengths with no Issues: {Lwne}")
+print(f"Time Growth for Sorts: {Tts}")
 
 
 
