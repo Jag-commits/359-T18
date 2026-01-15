@@ -7,7 +7,7 @@ import time
 word_list = retrieveWords()
 
 #The shuffled length starts from 5, and expands until it hits the max length
-shuffledLength = 5 
+shuffledLength = 5
 
 #Account will run out of tokens if I put this too high
 maxlength = 10240
@@ -31,6 +31,10 @@ while notMax:
     #Extract Values from GeminiCall method
     AItime = AIResponse["timeelapsed"] #Time to sort
     AISortedList = AIResponse["returnList"] #Sorted List
+    #The model failed after 2 attempts and thus we're skipping it
+    if AISortedList=="AI Model failed to respond after 2 attempts": 
+        print(AISortedList)
+        continue
     Tts.append((shuffledLength,round(AItime,5)))
     #Records the time elapsed for the model to return the sorted list
     print(f"Current List Length: {shuffledLength}")
