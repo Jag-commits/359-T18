@@ -1,42 +1,57 @@
 def compareSorted(original: list[str], ai_sorted: list[str]) -> dict:
-    #Create the correctly sorted list
+#Create the correctly sorted list
     correct = sorted(original)
 
-    #Initialize tracking variables to compare the lists
-    correctlySorted = 0     #Tracks number of correctly sorted words
-    missingWords = 0        #Tracks number of missing words
-    extraWords = 0         #Tracks number of extra words
-    firstErrorLocation = None       #Tracks the location of the first error made by the Ai sorted list
+#Initialize tracking variables to compare the lists
+    correctlySortedWords = 0         #Tracks number of correctly sorted words
+    missingWords = 0            #Tracks number of missing unique words
+    extraWords = 0              #Tracks number of extra unique words
+    duplicateWords = 0          #Tracks number of duplicate words
+    firstErrorLocation = None   #Tracks the location of the first error made by the AI sorted list
 
-    #Determine the limit for comparison based on the shorter list incase the Ai sorted list is missing or has extra words
+#Find which list is shorter and make that the furthest point for comparison
     limit = min(len(correct), len(ai_sorted))
 
-    #Compare the correctly sorted list to the Ai models sorted list
+#Compare the known sorted list to the AI models sorted list
     for i in range(limit):
-        #increment correctly sorted count if the Ai sorted word matches the correct word
-        if correct[i] == ai_sorted[i]:
-            correctlySorted += 1
-        #If the Ai's word does not match, check if it's the first error and record its location
+        if correct[i] == ai_sorted[i]:      #Increment correctly sorted counter if words match
+            correctlySortedWords += 1
+
         else:
-            if firstErrorLocation is None:
+            if firstErrorLocation is None:  #Record the first point words do not match
                 firstErrorLocation = i
 
-    #Check if the the Ai's list is missing words
-    if len(ai_sorted) < len(correct):
-        missingWords = len(correct) - len(ai_sorted)
-        if firstErrorLocation is None:
-            firstErrorLocation = limit
+#Create hash sets to compare the lists
+    correct_set = set(correct)
+    ai_set = set(ai_sorted)
 
-    #Check if the the Ai's list has extra words
-    elif len(ai_sorted) > len(correct):
-        extraWords = len(ai_sorted) - len(correct)
-        if firstErrorLocation is None:
-            firstErrorLocation = limit
+#Find the amount of words that are missing in the AIs list
+    missingWords = len(correct_set - ai_set)
 
+#Find how many words are only in the AIs list (Mainly duplicates)
+    extraWords = len(ai_set - correct_set)
+
+#Count duplicate words produced by the AI model
+    from collections import Counter
+    correct_counts = Counter(correct)
+    ai_counts = Counter(ai_sorted)
+
+#Any extra words in the AI list not in the expected list are duplicates
+    for word, count in ai_counts.items():
+        allowed = correct_counts.get(word, 0)
+        if count > allowed:
+            duplicateWords += count - allowed
+
+#If the list lengths are different and no errors are found in the comparison then the first error is the first word after the correctly sorted list
+    if len(ai_sorted) != len(correct) and firstErrorLocation is None:
+        firstErrorLocation = limit
+
+#Return the comparison results
     return {
         "inputSize": len(original),
-        "correctlySorted": correctlySorted,
+        "correctlySortedWords": correctlySortedWords,
         "missingWords": missingWords,
         "extraWords": extraWords,
+        "duplicateWords": duplicateWords,
         "firstErrorLocation": firstErrorLocation
     }
