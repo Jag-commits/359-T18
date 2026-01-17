@@ -44,7 +44,7 @@ def GeminiCall(words = list) -> dict:
                 continue
             else:
                 #We'll use this to skip this length
-                return {"returnList" :"AI Model failed to respond after 2 attempts"}
+                return {"returnList" :"AI Model failed to respond after 2 attempts: Skipping Length"}
 
   
 

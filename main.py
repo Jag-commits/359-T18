@@ -29,17 +29,20 @@ while notMax:
     #Stored in Dictionary
     AIResponse = GeminiCall(shuffledlist)
     #Extract Values from GeminiCall method
-    AItime = AIResponse["timeelapsed"] #Time to sort
     AISortedList = AIResponse["returnList"] #Sorted List
     #The model failed after 2 attempts and thus we're skipping it
-    if AISortedList=="AI Model failed to respond after 2 attempts": 
+    if AISortedList=="AI Model failed to respond after 2 attempts: Skipping Length": 
         print(AISortedList)
+        shuffledLength=shuffledLength*2
+        if shuffledLength>10240:
+            break
         continue
+    AItime = AIResponse["timeelapsed"] #Time to sort
     Tts.append((shuffledLength,round(AItime,5)))
     #Records the time elapsed for the model to return the sorted list
     print(f"Current List Length: {shuffledLength}")
     print(f"Time taken to sort: {AItime}")
-    
+    print(AISortedList)
     
 
     #Stored in Dictionary
@@ -49,9 +52,10 @@ while notMax:
         Lwe.append(shuffledLength)
 
         #Store all issues with AI Sorted List
-        correctlySorted = compareResults["correctlySorted"]
+        correctlySorted = compareResults["correctlySortedWords"]
         missingWords = compareResults["missingWords"]
         extraWords = compareResults["extraWords"]
+        duplicatewords = compareResults["duplicateWords"]
 
         #Display Which Errors Exist
         print()
@@ -59,8 +63,12 @@ while notMax:
         if correctlySorted !=0 : print(f"Number of Correctly Sorted Words: {correctlySorted}")
         if missingWords !=0:print(f"Number of Missing Words: {missingWords}")
         if extraWords !=0:print(f"Number of Extra Words: {extraWords}")
+        if duplicatewords !=0:print(f"Number of Duplicate Appearances of Words: {duplicatewords}")
+        #Separate the Next summary
+        print()
+
     else:
-        print("All Good")
+        print("All Good\n")
         Lwne.append(shuffledLength)
     shuffledLength= shuffledLength*2
     time.sleep(15) #Trying to Keep under Gemeni's 5 Requests per Minute
