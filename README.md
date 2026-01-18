@@ -105,6 +105,8 @@ Based on the observed data, the model becomes incredibly unreliable when approac
 
 Overall as seen in the graphs the time to sort the words within the 400 word range is manageable with list lengths of 50 taking under 10 seconds and ists of 320 words taking around 2 minutes and still sorting reliably. The longest possible list would be capped by the amount of tokens you are allowed to send to the AI model. But as we discovered there are large struggles with these large inputs not only with the time it takes but also the effectiveness of the sorting. These large values (2,000-40,000) take upwards of 7 minutes to sort and in most cases under 10 words were sorted correctly. Even though small problems were seen around 300 words the sorting was still reliable and the massive sorting errors of repeating and missing words were not present. 
 
+VLOG-Jagpreet (37 Minute Video Stitching All Vlog Recordings) : https://drive.google.com/drive/folders/1dJDU10RT9xSM9vJTEoFQ19CumB8WPjQW?usp=drive_link 
+
 Bibliography:
 
 Amos, David, “Object-Oriented Programming (OOP) in Python”, Real Python, https://realpython.com/python3-object-oriented-programming/ 
