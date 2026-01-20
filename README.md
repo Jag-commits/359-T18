@@ -107,6 +107,37 @@ Overall as seen in the graphs the time to sort the words within the 400 word ran
 
 VLOG-Jagpreet (37 Minute Video Stitching All Vlog Recordings) : https://drive.google.com/drive/folders/1dJDU10RT9xSM9vJTEoFQ19CumB8WPjQW?usp=drive_link 
 
+VLOG-Jacob (Screenshots with dates and descriptions of contributions) :
+January 6th & January 7th:
+Join up with my partner and discuss which prompt we want. A few of the ones we wanted got picked up but we decided on prompt 18 which is to test the effectiveness of an AI model's sorting abilities.
+We also discuss our initial plans around how we want to implement our prompt including which AI models seem reliable and come with a free plan. We settled on Gemini as it mostly matches our requirements.
+
+January 8th:
+Jagpreet sets up the GitHub Repository and adds me. We also discuss how we want the classes to be broken down, splitting up the word generation, AI sorting, and the comparison into their own classes. 
+As well, the Readme file is created and it is used as a place for us to plan and outline our current tasks and get all of our thoughts written down about what still needs to be completed on the assignment. 
+<img width="682" height="348" alt="ReadmeFileV1" src="https://github.com/user-attachments/assets/602078c3-120f-4a05-90a1-22861ea9112e" />
+
+
+January 10th & January 11th:
+This weekend I am coding the comparison class that will take in both the correctly sorted list and the AI’s sorted list and compare the two. When comparing the two I want to not only compare if they are different or not but what kinds of things are different. The five things this comparison class will look for right now are:
+-Length of the AI’s sorted list compared to the true sorted list
+-Number of words correctly sorted
+-Missing words
+-Extra or added words
+-Where the first error in sorting happened
+<img width="624" height="360" alt="ComarisonClassV1" src="https://github.com/user-attachments/assets/b9b4355e-5ddf-46be-8ae6-7c97ccd516be" />
+
+Above is the first version of the sorting class. There was some struggle in coding it as I do not have too much experience in python. Although the layout and goals of the class were simple and understandable, some learning of pythons syntax was necessary to complete the class. Listed in the bibliography are multiple resources that I used to help with the syntax and workings of python. Coming from primarily Java the syntax was not too hard to adapt to.
+
+January 15th:
+Updated the comparison class as the code previously had issues counting the amount of duplicate words the AI sorting was creating with large lists. We didn't expect the AI to break down the way it did being barely able to sort any words when prompted with the large list. Below is the updated code that uses hashsets to compare the lists and properly tracks the issues the AI is having.
+<img width="524" height="334" alt="Updated Comparison Class" src="https://github.com/user-attachments/assets/42556505-b21f-4997-b6ea-b6be711f6189" />
+
+January 16th & 17th:
+With the new comparison class working we now have the data required to analyze the effectiveness of the AIs sorting abilities. I took the data received to Excel and graphed the data to really show the relationships between the time it takes and the amount of words sorted. I was surprised to see the relationship change as inputs grew very large but as I will discuss in the Readme file this could be due to us hitting the token limits for the AI API we are using.
+<img width="1066" height="811" alt="Sorting Time Graphs" src="https://github.com/user-attachments/assets/04948170-408f-402d-870a-71d0f1ceb493" />
+
+
 Bibliography:
 
 Amos, David, “Object-Oriented Programming (OOP) in Python”, Real Python, https://realpython.com/python3-object-oriented-programming/ 
